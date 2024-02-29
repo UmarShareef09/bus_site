@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <style>
+        table{
+            background-color: beige;
+            border: 2px solid black;
+        }
+        h1{
+            text-align: center;
+            text-decoration: double;
+        }
+        #mydiv1{
+            border: 1px solid black;
+            border-radius: 5px;
+            background-color: aqua;
+        }
+        body{
+          background-image: url("./images/bus\ 3.png");
+          background-repeat: no-repeat;
+          background-size: cover;
+          height: 500px;
+          width: 1480px;
+        }
+        #myfrom1{
+          margin-left: 600px;
+          border-radius: 5px;
+          margin-top: 100px;
+        }
+        #myto1{
+          margin-left: 600px;
+          border-radius: 5px;
+        }
+        h2{
+          text-align: left;
+          margin-left: 50px;
+        }
+        #myclick{
+          margin-left: 600px;
+        }
+        #mybook{
+          margin-left: 600px;
+        }
+        #myuser2{
+          float: right;
+      
+        }
+        .myticket2{
+          margin:5px 50px 0px;
+          background-color: bisque;
+          padding: 10px;
+          border: 4px double black;
+          border-radius: 15px;
+          text-align: center;
+          justify-content: center;
+          width: 300px;
+          height: 250px;
+
+        }
+        #myticket1{
+          display: flex;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div id="mydiv1" class="shadow p-3 mb-5 bg-body-tertiary rounded"><h1><u>User Page</u></h1></div>
+    <h2>Search Buses</h2>
+    <br>
+    <button onclick="mytickets()" id="myuser2" class="btn btn-primary" >My Tickets </button> <br>
+    <br>
+    <input type="text" name="" id="myfrom1" placeholder="Enter From"> <br>
+    <br>
+    <input type="text" name="" id="myto1" placeholder="Enter To">
+
+      <br>
+
+      <br>
+    <button onclick="passengerinput()" type="button" class="btn btn-success"  id="myclick">Click Me</button>
+    <div id="busdata">
+
+    </div>
+    <br>
+
+      <br> 
+
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Book Ticket</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <span class="border border-white"></span>
+          <div class="input-group">
+              <span class="input-group-text">User Name :</span>
+              <input type="text" aria-label="First name" class="form-control" id="username">
+            </div>
+            <br>
+            <div class="input-group">
+              <span class="input-group-text">From :</span>
+              <input type="text" aria-label="First name" class="form-control" id="userfrom">
+            </div>
+            <br>
+            <div class="input-group">
+              <span class="input-group-text">To :</span>
+              <input type="text" aria-label="First name" class="form-control" id="userto">
+            </div>
+            <br>
+            <div class="input-group">
+              <span class="input-group-text">Age :</span>
+              <input type="text" aria-label="First name" class="form-control" id="age">
+            </div>
+            <br>
+            <div class="input-group">
+              <span class="input-group-text">Gender :</span>
+              <input type="text" aria-label="First name" class="form-control" id="gender">
+            </div>
+            <br>
+            <div class="input-group">
+              <span class="input-group-text"> Ticket :</span>
+              <input type="text" aria-label="First name" class="form-control" id="ticket" onchange="multickets()">
+            </div>
+            <br>
+            <p id="myp1"></p>
+            <br>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" onclick="booknow()" >Book</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+
+      <div id="myticket1" >
+
+
+      </div>
+
+
+
+
+
+    <script>
+
+        var ticketsbooked = [{}]
+  
+        function passengerinput(){
+            var bus =JSON.parse(localStorage.getItem("Travelsdetails"))
+           var f = document.getElementById("myfrom1").value 
+           var t = document.getElementById("myto1").value
+            var busdata1 = document.getElementById("busdata")
+
+            
+ 
+
+
+          var table= "<table class='table table-dark table-striped'>"+
+            "<tr><th>Busname</th><th>arrivalTime</th><th>ReachTime</th><th>From</th><th>To</th><th>Price</th><th>Book Here</th></tr>"
+
+            
+            //     "<tr><th>Busname</th><th>arrivalTime</th><th>ReachTime</th><th>From</th><th>To</th><th>Price</th><th>Book Here</th></tr>"
+            for(var a=0; a<bus.length; a++){
+                if(bus[a].From==f && bus[a].To==t){
+                    table+=`<tr><td>${bus[a].Busname}</td><td>${bus[a].arrivalTime}</td><td>${bus[a].ReachTime}</td><td>${bus[a].From}</td><td>${bus[a].To}</td><td>${bus[a].Price}</td><td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="mybook">Book now</button></td></tr>`;
+                }
+            }
+              busdata1.innerHTML=table+"</table>"
+            
+              
+        }
+        function booknow(){
+
+             var i = document.getElementById("username").value
+             var j = document.getElementById("userfrom").value
+             var k = document.getElementById("userto").value
+             var l = document.getElementById("age").value
+             var m = document.getElementById("gender").value
+             var n = document.getElementById("ticket").value
+             ticketsbooked.push({Username: i, From: j, To: k, Age: l, Gender: m, Ticket: n,});
+             localStorage.setItem("usersticketbooked",JSON.stringify(ticketsbooked))
+            
+
+
+        }
+        function multickets(){
+          var p =  document.getElementById("myp1")
+          var n = document.getElementById("ticket").value
+          p.innerHTML= "price -"+ n * 1000
+        
+
+
+        }
+
+        function mytickets(){
+
+          var bookedtickets = JSON.parse(localStorage.getItem("usersticketbooked"))
+          console.log(bookedtickets)
+          var usertickets1=document.getElementById("myticket1")
+          var emp=" ";
+          if(bookedtickets){
+          for(var a=1;a<bookedtickets.length;a++){
+            emp+=         `<div class='myticket2'><u>My Tickets<br>
+                          <hr>
+                            Person Name  : ${bookedtickets[a].Username}<br>
+                            Person age   : ${bookedtickets[a].Age}<br>
+                            Gender       : ${bookedtickets[a].Gender}<br>
+                            From         : ${bookedtickets[a].From}<br>
+                            To           : ${bookedtickets[a].To}<br>
+                            Ticket       : ${bookedtickets[a].Ticket}<br>
+                            Price        : ${1000*bookedtickets[a].Ticket}<br></div>`
+            }
+          usertickets1.innerHTML=emp;
+          }
+      
+    }
+
+        
+
+    </script>
+</body>
+</html>
+
+
+
+
+
